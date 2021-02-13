@@ -9,10 +9,7 @@ import com.wangkai.information.bean.InfoBean;
 import com.wangkai.information.service.InforService;
 import com.wangkai.utils.ResultDataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -24,7 +21,7 @@ public class InfoController {
 
 
     @GetMapping("/lists")
-    public String lists(Map<String,Object> paramsMap){
+    public String lists(@RequestParam Map<String,Object> paramsMap){
         Collection<InfoBean> infoBeans =  inforService.listAllInfo(paramsMap);
         return ResultDataUtils.build(200, "操作成功", infoBeans);
     }

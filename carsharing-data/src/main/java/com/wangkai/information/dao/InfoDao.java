@@ -5,6 +5,7 @@ import com.wangkai.information.bean.InfoBean;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,5 @@ public interface InfoDao {
 
     public boolean add(InfoBean infoBean);
 
-    public Collection<InfoBean> listAllInfo(Map<String,Object> paramsMap);
+    public List<InfoBean> listAllInfo(Map<String,Object> paramsMap);
 }

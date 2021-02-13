@@ -18,6 +18,7 @@
     <properties>
         <mybatis-spring-boot>1.2.0</mybatis-spring-boot>
         <mysql-connector>5.1.6</mysql-connector>
+        <page-help-starter>1.2.3</page-help-starter>
     </properties>
 
     <dependencies>
@@ -32,6 +33,13 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>${mybatis-spring-boot}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${page-help-starter}</version>
         </dependency>
 
         <!-- MySQL 连接驱动依赖 -->

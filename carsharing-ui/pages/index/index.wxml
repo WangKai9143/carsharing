@@ -26,9 +26,9 @@
             </view>
 
             <view class="weui-tab__panel">
-                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">
                     <view class="weui-panel__bd">
-                        <navigator wx:for="{{list1}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                        <navigator wx:for="{{carList}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                                 <image class="weui-media-box__thumb" src="{{item.avatarUrl}}" />
                             </view>
@@ -43,9 +43,9 @@
                         </navigator>
                     </view>
                 </view>
-                <view class="weui-tab__content" hidden="{{activeIndex != 2}}">
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">
                     <view class="weui-panel__bd">
-                        <navigator wx:for="{{list2}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                        <navigator wx:for="{{peopleList}}" wx:for-index="idx" wx:key="k" wx:for-item="item" url="{{item.url}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
                             <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                                 <image class="weui-media-box__thumb" src="{{item.avatarUrl}}" />
                             </view>

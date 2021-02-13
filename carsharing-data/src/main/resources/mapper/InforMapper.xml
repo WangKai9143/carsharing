@@ -54,7 +54,7 @@
         <!--            and time &gt;= ${time}-->
         <!--        </if>) -->
         <if test="type != null and type != ''">
-            and type &lt;= #{type}
+            and type = #{type}
         </if>) info
         left join xcx_user as user on info.id = info.uid order by info.time asc
     </select>
