@@ -1,0 +1,27 @@
+wx:
+  appid: 'wx7315731f7da2477e'
+  appsecret: 'ef517b41546112236b858748d935ad75'
+
+spring:
+  session:
+    store-type: none
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/carsharing?useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: root
+  #
+  #    jpa:
+  #      properties:
+  #        hibernate:
+  #          hbm2ddl:
+  #            auto: create
+  #          dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+  #          format_sql: true
+  #      show-sql: true
+  ## Mybatis 配置
+mybatis:
+  typeAliasesPackage: com.wangkai.**.bean
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
