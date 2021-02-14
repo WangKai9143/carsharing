@@ -19,7 +19,7 @@ mybatis:
 
 pagehelper:
   helperDialect: mysql
-  reasonable: true
+  reasonable: false
   supportMethodsArguments: true
   pageSizeZero: true
   params: count=countSql
