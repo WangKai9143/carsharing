@@ -31,12 +31,14 @@ Page({
             sliderOffset: e.currentTarget.offsetLeft,
             activeIndex: e.currentTarget.id
         });
-        if (this.data.activeIndex == 0) {
+        // tab切换，有数据就不用向后台再请求
+        if (this.data.activeIndex == 0 && (carList == null || carList.length == 0)) {
             carPage = 1;
-        } else {
+            this.getList(e.detail.value, this.data.start, this.data.over);
+        } else if (this.data.activeIndex == 1 && (peopleList == null || peopleList.length == 0)) {
             peoplePage = 1;
+            this.getList(e.detail.value, this.data.start, this.data.over);
         }
-        this.getList(e.detail.value, this.data.start, this.data.over);
     },
     bindDateChange: function (e) {
         this.setData({
@@ -53,7 +55,6 @@ Page({
 
     getCarList: function (date = '', start = '', over = '') {
         var that = this;
-        console.log("======" + that.data.activeIndex);
         util.req('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: carPage, type: that.data.activeIndex},
             function (result) {
@@ -97,11 +98,15 @@ Page({
                     carList.push(obj);
                 })
                 that.setData({carList: carList});
+                // 防止首页数据小于5，前端显示加载中
+                if (result.data.length < 5) {
+                    that.setData({carNomore: true});
+                    return false;
+                }
             })
     },
     getPeopleList: function (date = '', start = '', over = '') {
         var that = this;
-        console.log("======" + that.data.activeIndex);
         util.req('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: peoplePage, type: that.data.activeIndex},
             function (result) {
@@ -145,6 +150,11 @@ Page({
                     peopleList.push(obj);
                 })
                 that.setData({peopleList: peopleList});
+                // 防止首页数据小于5，前端显示加载中
+                if (result.data.length < 5) {
+                    that.setData({popleNomore: true});
+                    return false;
+                }
             })
     },
     getList: function (date = '', start = '', over = '') {
@@ -224,7 +234,6 @@ Page({
         this.getList(this.data.date, this.data.start, this.data.over);
     },
     onReachBottom: function () {
-        console.log("=========" + this.data.nomore);
         if (this.data.activeIndex == 0) {
             if (!this.data.carNomore) {
                 carPage++;

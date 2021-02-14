@@ -64,11 +64,11 @@
         </view>
  </view>
 <view class="page__bd">
-    <view class="weui-loadmore" bindtap="onReachBottom" wx:if="{{!nomore}}"> 
+    <view class="weui-loadmore" bindtap="onReachBottom" wx:if="{{(activeIndex==0 && !carNomore) || (activeIndex==1 && !popleNomore)}}">
         <view class="weui-loading"></view>
         <view class="weui-loadmore__tips">正在加载</view>
     </view>
-    <view class="weui-loadmore weui-loadmore_line" wx:if="{{nomore}}">
+    <view class="weui-loadmore weui-loadmore_line" wx:if="{{(activeIndex==0 && carNomore) || (activeIndex==1 && popleNomore)}}">
         <view class="weui-loadmore__tips weui-loadmore__tips_in-line">没有更多了~</view>
     </view>
 </view>
