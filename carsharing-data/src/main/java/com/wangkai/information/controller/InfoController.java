@@ -27,13 +27,13 @@ public class InfoController {
     }
 
     @GetMapping("/details")
-    public String queryDetails(String id){
+    public String queryDetails(@RequestParam int id){
         InfoBean infoBean = inforService.getDetails(id);
         return ResultDataUtils.build(200, "操作成功", infoBean);
     }
 
     @PostMapping("/add")
-    public String handleAdd(InfoBean infoBean){
+    public String handleAdd(@RequestBody InfoBean infoBean){
         final double d = Math.random();
         final int id = (int)(d*100);
         infoBean.setId(id);

@@ -23,7 +23,7 @@ public class InforService {
 
     private static int pageSize = 5;
 
-    public InfoBean getDetails(String id) {
+    public InfoBean getDetails(int id) {
         return inforDao.getDetails(id);
     }
 

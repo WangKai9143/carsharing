@@ -58,7 +58,6 @@ Page({
         util.req('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: carPage, type: that.data.activeIndex},
             function (result) {
-                console.log("result===" + result.data.length);
                 if (result.data.length == 0) {
                     that.setData({carNomore: true});
                     return false;
@@ -110,7 +109,6 @@ Page({
         util.req('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: peoplePage, type: that.data.activeIndex},
             function (result) {
-                console.log("result===" + JSON.stringify(result.data));
                 if (result.data.length == 0) {
                     that.setData({popleNomore: true});
                     return false;
@@ -226,10 +224,14 @@ Page({
                 })
             }
         });
+    },
+    onShow: function () {
         if (this.data.activeIndex == 0) {
             carPage = 1;
+            this.setData({carNomore: false});
         } else {
             peoplePage = 1;
+            this.setData({carNomore: false});
         }
         this.getList(this.data.date, this.data.start, this.data.over);
     },

@@ -13,7 +13,7 @@ import java.util.Map;
  */
 //@Mapper和在application中@MapperScan选择一种方式使用
 public interface InfoDao {
-    public InfoBean getDetails(String id);
+    public InfoBean getDetails(int id);
 
     public boolean add(InfoBean infoBean);
 
