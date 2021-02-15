@@ -1,4 +1,4 @@
-package com.wangkai.information.bean;
+package com.wangkai.comment.bean;
 
 import com.wangkai.common.BaseInfo;
 import lombok.AllArgsConstructor;

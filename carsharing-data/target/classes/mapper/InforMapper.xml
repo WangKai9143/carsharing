@@ -56,6 +56,11 @@
         <if test="type != null and type != ''">
             and type = #{type}
         </if>) info
-        left join xcx_user as user on info.id = info.uid order by info.time asc
+        left join xcx_user as user on user.id = info.uid order by info.time asc
+    </select>
+
+    <select id="getDetails" resultMap="InfoAndUserVo"
+            parameterType="int">
+        select info.*, user.nickName,user.avatarUrl from (select * from xcx_info where id = #{id}) info left join xcx_user as user on user.id = info.uid
     </select>
 </mapper>

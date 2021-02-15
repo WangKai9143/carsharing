@@ -1,4 +1,4 @@
-package com.wangkai.information.common;
+package com.wangkai.common;
 
 /**
  * Created by Administrator on 2019/12/1.

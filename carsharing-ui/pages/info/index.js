@@ -176,11 +176,11 @@ Page({
         if(page == 1){          
           comment = new Array();
         }
-        if(result.data == null){
+        if (result.data.length == 0) {
           that.setData({'nomore':true});
-        }else{
+          return false;
+        } else{
             result.data.forEach(function(item){
-              console.log("XXXXXXXX:"+item.id);
               comment.push({
               id:item.id,
               avatarUrl:item.avatarUrl,
@@ -196,6 +196,11 @@ Page({
         }
         console.log(page+'XXXXXXXXXXXXXX'+comment);
         that.setData({comment:comment});
+        // 防止首页数据小于20，前端显示加载中
+        if (result.data.length < 20) {
+          that.setData({'nomore':true});
+          return false;
+        }
       }
     })
   },
@@ -212,7 +217,7 @@ Page({
   },
   getCount:function(id){  
     var that = this;
-    util.req('http://wk.test.com:8080/comment/get_count',{id:id,type:'info'},function(result){  //获取评论总数
+    util.req('http://wk.test.com:8080/comment/getCount',{id:id,type:'info'},function(result){  //获取评论总数
       if(result.code == 200){
         that.setData({comnum:result.data});
       }

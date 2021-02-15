@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangkai.comment.dao.CommentDao">
+    <select id="getCommentCount" resultType="int" parameterType="com.wangkai.comment.bean.CommentBean">
+        select count(1) from xcx_comment where iid= #{id} and type = #{type}
+    </select>
+
+    <select id="getComment" resultType="com.wangkai.comment.bean.CommentBean" parameterType="java.util.Map">
+        select * from xcx_comment where iid= #{iid} and type = #{type}
+    </select>
+</mapper>

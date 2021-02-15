@@ -1,6 +1,6 @@
 package com.wangkai.utils;
 
-import com.wangkai.information.bean.CommentBean;
+import com.wangkai.comment.bean.CommentBean;
 import com.wangkai.information.bean.InfoBean;
 
 import java.util.Collection;

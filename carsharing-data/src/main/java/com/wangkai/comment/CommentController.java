@@ -1,15 +1,12 @@
-package com.wangkai.information.controller;
+package com.wangkai.comment;
 
-import com.wangkai.information.bean.CommentBean;
-import com.wangkai.information.service.CommentService;
+import com.wangkai.comment.bean.CommentBean;
 import com.wangkai.utils.ResultDataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2020/2/23.
@@ -22,24 +19,22 @@ public class CommentController {
     private CommentService commentService;
 
     @GetMapping("/get")
-    public String queryComment(CommentBean commentBean) {
-//        CommentBean comment = null;
+    public String queryComment(@RequestParam Map<String,Object> paramsMap) {
         Collection<CommentBean> commentBeans;
         try {
-//          comment = commentService.getComment(commentBean);
-            commentBeans = commentService.getComment(commentBean);
+            commentBeans = commentService.getComment(paramsMap);
         } catch (Exception e) {
             e.printStackTrace();
-            return ResultDataUtils.build(20001, "操作失败");
+            return ResultDataUtils.build(20001, "评论加载失败");
         }
-        return ResultDataUtils.build(200, "操作成功", commentBeans);
+        return ResultDataUtils.build(200, "评论加载成功", commentBeans);
     }
 
-    @GetMapping("/get_count")
+    @GetMapping("/getCount")
     public String getCount(CommentBean commentBean) {
-        Integer count = 2;
+        Integer count = 0;
         try {
-            count = 2;
+            count = commentService.getCommentCount(commentBean);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultDataUtils.build(20001, "操作失败", count);
