@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wangkai.comment.dao.CommentDao">
+    <insert id="replyComment" parameterType="com.wangkai.comment.bean.CommentBean">
+        insert into xcx_comment(uid,iid,type,content,reply,img) values (#{uid},#{iid},#{type},#{content},#{reply},#{img})
+    </insert>
+
     <select id="getCommentCount" resultType="int" parameterType="com.wangkai.comment.bean.CommentBean">
         select count(1) from xcx_comment where iid= #{id} and type = #{type}
     </select>

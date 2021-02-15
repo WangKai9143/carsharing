@@ -12,4 +12,6 @@ public interface CommentDao {
     Integer getCommentCount(CommentBean commentBean);
 
     List<CommentBean> getComment(Map<String,Object> paramsMap);
+
+    void replyComment(CommentBean commentBean);
 }

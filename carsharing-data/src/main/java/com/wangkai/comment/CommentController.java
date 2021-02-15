@@ -44,13 +44,12 @@ public class CommentController {
 
     @PostMapping("/add")
     public String replyComment(CommentBean commentBean) {
-        boolean result;
         try {
-            result = commentService.addComment(commentBean);
+           commentService.replyComment(commentBean);
         } catch (Exception e) {
             e.printStackTrace();
             return ResultDataUtils.build(20001, "操作失败");
         }
-        return result ? ResultDataUtils.build(200, "操作成功") : ResultDataUtils.build(20001, "操作失败");
+        return ResultDataUtils.build(200, "操作成功");
     }
 }

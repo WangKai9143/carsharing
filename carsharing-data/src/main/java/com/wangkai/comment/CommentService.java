@@ -32,15 +32,8 @@ public class CommentService {
         return comments;
     }
 
-    public boolean addComment(CommentBean commentBean) {
-        try {
-            String key = commentBean.getType() + "$" + commentBean.getIid();
-            InforMaps.putComment(key, commentBean);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
+    public void replyComment(CommentBean commentBean) {
+         commentDao.replyComment(commentBean);
     }
 
     public Integer getCommentCount(CommentBean commentBean) {

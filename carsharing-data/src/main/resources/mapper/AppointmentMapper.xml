@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangkai.appointment.dao.AppointmentDao">
+
+    <insert id="appointment" parameterType="com.wangkai.appointment.bean.AppointmentBean">
+        insert into xcx_appointment(uid,iid,name,phone,surplus,time,status) values (#{uid},#{iid},#{name},#{phone},#{surplus},#{time},#{status})
+    </insert>
+</mapper>

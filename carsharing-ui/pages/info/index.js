@@ -97,8 +97,9 @@ Page({
         return false;
     }
     util.clearError(that);
-    util.req('appointment/add',{form_id:fId,iid:this.data.data.id,name:e.detail.value.name,phone:e.detail.value.phone,surplus:e.detail.value.surplus,sk:app.globalData.sk},function(data){
-      if(data.status == 1){
+    util.postReq('http://wk.test.com:8080/appointment/add',{form_id:fId,iid:this.data.data.id,name:e.detail.value.name,phone:e.detail.value.phone,surplus:e.detail.value.surplus,sk:app.globalData.sk},function(result){
+      console.log("xxxxxxxx",JSON.stringify(result));
+      if(result.code == 200){
         that.setData({modalFlag:false});
         wx.showToast({
           title: '预约成功',
@@ -106,7 +107,7 @@ Page({
           duration: 2000
         })
       }else{
-        util.isError(data.msg,that);
+        util.isError(result.data.msg,that);
         return false;
       }
     })
@@ -142,14 +143,13 @@ Page({
       // }
       var notme = true;
       var Surpluss = new Array('请选择人数');
-      for(var i = 1; i <= result.surplus; i++){
+      for(var i = 1; i <= result.data.surplus; i++){
         Surpluss.push(i);
       }
       that.setData({
         'data.tm':util.formatTime(new Date(result.time*1000)),
-        'data.price':(result.price == null)?'面议':result.price,
-        'data.gender':result.gender,
-
+        'data.price':(result.data.price == null)?'面议':result.data.price,
+        'data.gender':result.data.gender,
         'notme':notme,
         'Surpluss':Surpluss,
         'surplus':0
