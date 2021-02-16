@@ -27,6 +27,7 @@ public class UserBean {
 
     private Integer id;
     private String avatarUrl;
+    private String city;
     private String country;
     private String gender;
     private String language;

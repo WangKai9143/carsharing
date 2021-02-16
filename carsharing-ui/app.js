@@ -54,10 +54,10 @@ App({
 
   loginFail: function () {
     var that = this;
-    // wx.showModal({
-    //     content: '登录失败，请允许获取用户信息,如不显示请删除小程序重新进入',
-    //     showCancel: false
-    // });
+    wx.showModal({
+        content: '登录失败，请允许获取用户信息,如不显示请删除小程序重新进入',
+        showCancel: false
+    });
     that.login();
   },
   setUserInfo:function(data){   //将用户信息缓存保存

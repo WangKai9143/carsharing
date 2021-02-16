@@ -36,17 +36,17 @@ Page({
               "code": res.code,
               "encryptedData": userinfo.encryptedData,
               "iv": userinfo.iv
-            }, function (data) {
-              console.log(data.data.userInfo)
-              app.setUserInfo(data.data.userInfo);
-              app.setSk(data.data.sk);
+            }, function (result) {
+              console.log("user===="+JSON.stringify(result));
+              app.setUserInfo(result.data.userInfo);
+              app.setSk(result.data.sk);
               wx.reLaunch({
                 url: '/pages/index/index',
               })
             })
           },
           fail: function (res) {
-            // that.loginFail();
+            that.loginFail();
           }
         })
       }

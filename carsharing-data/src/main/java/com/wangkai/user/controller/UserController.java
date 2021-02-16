@@ -6,9 +6,13 @@ package com.wangkai.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wangkai.user.bean.UserBean;
+import com.wangkai.user.service.UserService;
 import com.wangkai.utils.HttpClientUtil;
 import com.wangkai.utils.ResultDataUtils;
 import com.wangkai.utils.WechatGetUserInfoUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,20 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 
 @RequestMapping("/user")
 @RestController
 public class UserController {
-    //    @Value("${wx.appid}")
+    @Value("${wx.appid}")
     private String appid;
 
-    //    @Value("${wx.appSecret}")
+    @Value("${wx.appsecret}")
     private String appSecret;
 
+    @Autowired
+    private UserService userService;
+
     /**
-     * 登录接口
+     * 登录接口，前端通过wx.login接口获取code传递到后台，后台通过请求api换回session_key和openid，
+     * 返回的openid是每个用户唯一的，通过这个 可以匹配 微信（腾讯）的用户 跟 我们的用户，就是我们后台通过openid来判断这个人是谁
      *
      * @param encryptedData
      * @param iv
@@ -41,24 +48,25 @@ public class UserController {
         if (StringUtils.isEmpty(code)) {
             return ResultDataUtils.build(202, "未获取到用户凭证code");
         }
-        if (StringUtils.isEmpty(appid)) {
-            appid = "wx7315731f7da2477e";
-        }
-        if (StringUtils.isEmpty(appSecret)) {
-            appSecret = "ef517b41546112236b858748d935ad75";
-        }
         String apiUrl = "https://api.weixin.qq.com/sns/jscode2session?appid=" + appid + "&secret=" + appSecret + "&js_code=" + code + "&grant_type=authorization_code";
-        System.out.println(apiUrl);
         String responseBody = HttpClientUtil.doGet(apiUrl);
-        System.out.println(responseBody);
         JSONObject jsonObject = JSON.parseObject(responseBody);
-        if (!StringUtils.isEmpty(jsonObject.getString("openid")) && !
-                StringUtils.isEmpty(jsonObject.getString("session_key"))) {
-            //解密获取用户信息
-            JSONObject userInfoJSON = WechatGetUserInfoUtil.getUserInfo(encryptedData, jsonObject.getString("session_key"), iv);
+        String openId = jsonObject.getString("openid");
+        String session_key = jsonObject.getString("session_key");
+
+        UserBean userBean = userService.getUserInfoByOpenid(openId);
+        String result = null;
+        if (userBean!=null){
+            Map<String, Object> userResult = new HashMap<>();
+            userResult.put("userInfo", userBean);
+            userResult.put("sk", session_key);
+            result = ResultDataUtils.build(200, "登陆成功", userResult);
+        } else if (!StringUtils.isEmpty(openId) && !StringUtils.isEmpty(session_key)) {
+            // 解密获取用户信息
+            JSONObject userInfoJSON = WechatGetUserInfoUtil.getUserInfo(encryptedData, session_key, iv);
             if (userInfoJSON != null) {
-                //这步应该set进实体类
-                Map userInfo = new HashMap();
+                //这步应该set进实体类,还有phone，vehicle，name
+                Map<String, Object> userInfo = new HashMap();
                 userInfo.put("openId", userInfoJSON.get("openId"));
                 userInfo.put("nickName", userInfoJSON.get("nickName"));
                 userInfo.put("gender", userInfoJSON.get("gender"));
@@ -66,24 +74,20 @@ public class UserController {
                 userInfo.put("province", userInfoJSON.get("province"));
                 userInfo.put("country", userInfoJSON.get("country"));
                 userInfo.put("avatarUrl", userInfoJSON.get("avatarUrl"));
-                // 解密unionId & openId;
-                if (userInfoJSON.get("unionId") != null) {
-                    userInfo.put("unionId", userInfoJSON.get("unionId"));
-                }
-                //然后根据openid去数据库判断有没有该用户信息，若没有则存入数据库，有则返回用户数据
-                Map<String, Object> dataMap = new HashMap<String, Object>();
-                dataMap.put("userInfo", userInfo);
-                String uuid = UUID.randomUUID().toString();
-                dataMap.put("WXTOKEN", uuid);
-                String result = ResultDataUtils.build(200, "登陆成功", dataMap);
-                return result;
+                userInfo.put("language", userInfoJSON.get("language"));
+                userInfo.put("name", "游客");
+                userService.saveUser(userInfo);
+                Map<String, Object> userResult = new HashMap<>();
+                userResult.put("userInfo", userInfo);
+                userResult.put("sk", session_key);
+                result = ResultDataUtils.build(200, "登陆成功", userResult);
             } else {
-                return ResultDataUtils.build(202, "解密失败");
+                result =  ResultDataUtils.build(202, "请求微信端服务器失败或者解析用户信息失败");
             }
         } else {
-            return ResultDataUtils.build(202, "未获取到用户openid 或 session");
+            result = ResultDataUtils.build(202, "未获取到用户openid 或 session");
         }
+        return result;
     }
-
 
 }
