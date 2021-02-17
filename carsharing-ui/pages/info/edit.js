@@ -91,10 +91,10 @@ Page({
     data.departure = that.data.data.departure;
     data.destination = that.data.data.destination;
     data.id = that.data.data.id;
-    util.req('info/add',data,function(data){
-      if(data.status == 1){
+    util.post('http://wk.test.com:8080/info/update',data,function(result){
+      if(result.code == 200){
         wx.redirectTo({
-          url: '/pages/info/index?id='+data.info
+          url: '/pages/info/index?id='+data.id
         });
       }else{
         util.isError(data.msg,that);
@@ -125,10 +125,10 @@ Page({
   },
   onLoad:function(options){
     var that = this;
-    util.req('info/index',{id:options.id},function(data){
-      var time = util.formatTime(new Date(data.data.time*1000)).split(' ')[1];
-      data.data.time = time;
-      that.setData({data:data.data});
+    util.get('http://wk.test.com:8080/info/details',{id:options.id},function(result){
+      var time = util.formatTime(new Date(result.data.time*1000)).split(' ')[1];
+      result.data.time = time;
+      that.setData({data:result.data});
     })
   }
 })

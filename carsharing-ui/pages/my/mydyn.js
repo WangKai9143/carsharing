@@ -21,7 +21,7 @@ Page({
   },
   getList: function () {
     var that = this;
-    util.req('dynamic/getList', { page: page, sk: app.globalData.sk }, function (data) {
+    util.get('dynamic/getList', { page: page, sk: app.globalData.sk }, function (data) {
       var list = data.list;
       if (page == 1) {
         var arr = new Array();
@@ -54,7 +54,7 @@ Page({
         if (res.confirm) {
           var list = that.data.list;
           var id = list[e.target.dataset.id].id;
-          util.req('dynamic/del',{id:id,sk:app.globalData.sk},function(data){
+          util.get('dynamic/del',{id:id,sk:app.globalData.sk},function(data){
             if(data.status == '1'){
               list.splice(e.target.dataset.id,1);
               console.log(list);
@@ -94,7 +94,7 @@ Page({
     if (content == '') {
       return false;
     }
-    util.req('comment/add', {
+    util.get('comment/add', {
       'iid': that.data.list[that.data.nowid].id,
       'reply': (that.data.reply).replace('回复', ''),
       'type': 'dynamic',

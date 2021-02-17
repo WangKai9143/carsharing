@@ -32,7 +32,7 @@ Page({
       success: function (res) {
         wx.getUserInfo({
           success: function (userinfo) {
-            util.req('http://wk.test.com:8080/user/login', {
+            util.get('http://wk.test.com:8080/user/login', {
               "code": res.code,
               "encryptedData": userinfo.encryptedData,
               "iv": userinfo.iv

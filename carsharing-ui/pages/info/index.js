@@ -24,7 +24,7 @@ Page({
   zan:function(event){
     var that = this;
     var Commentdata = this.data.comment;
-    util.req('comment/zan',{
+    util.get('comment/zan',{
       'cid':Commentdata[event.currentTarget.id].id,
       'sk':app.globalData.sk
       },function(data){
@@ -46,7 +46,7 @@ Page({
   },
   shoucang:function(){
     var that = this;
-    util.req('fav/addfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
+    util.get('fav/addfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
       if(data.status == 1){
         that.setData({'shoucang':true});
         wx.showToast({
@@ -59,7 +59,7 @@ Page({
   },
   qxshoucang:function(){
     var that = this;
-    util.req('fav/delfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
+    util.get('fav/delfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
       if(data.status == 1){
         that.setData({'shoucang':false});
         wx.showToast({
@@ -97,7 +97,7 @@ Page({
         return false;
     }
     util.clearError(that);
-    util.postReq('http://wk.test.com:8080/appointment/add',{form_id:fId,iid:this.data.data.id,name:e.detail.value.name,phone:e.detail.value.phone,surplus:e.detail.value.surplus,sk:app.globalData.sk},function(result){
+    util.post('http://wk.test.com:8080/appointment/add',{form_id:fId,iid:this.data.data.id,name:e.detail.value.name,phone:e.detail.value.phone,surplus:e.detail.value.surplus,sk:app.globalData.sk},function(result){
       console.log("xxxxxxxx",JSON.stringify(result));
       if(result.code == 200){
         that.setData({modalFlag:false});
@@ -129,12 +129,12 @@ Page({
       'userInfo.phone':app.globalData.userInfo.phone
     })
 
-    // util.req('fav/isfav',{iid:options.id,sk:app.globalData.sk},function(data){
+    // util.get('fav/isfav',{iid:options.id,sk:app.globalData.sk},function(data){
     //   if(data.status == 1){
     //     that.setData({'shoucang':true});
     //   }
     // })
-      util.req('http://wk.test.com:8080/info/details?id=' + options.id,{},function(result){
+      util.get('http://wk.test.com:8080/info/details?id=' + options.id,{},function(result){
       that.setData({data:result.data});
       // if(data.data.uid == app.globalData.userInfo.id){
       //   var notme = false;
@@ -171,7 +171,7 @@ Page({
   },
   getComment:function(id){
     var that = this;
-    util.req('http://wk.test.com:8080/comment/get',{iid:id,type:'info',page:page},function(result){
+    util.get('http://wk.test.com:8080/comment/get',{iid:id,type:'info',page:page},function(result){
       if(result.code == 200){
         if(page == 1){          
           comment = new Array();
@@ -217,7 +217,7 @@ Page({
   },
   getCount:function(id){  
     var that = this;
-    util.req('http://wk.test.com:8080/comment/getCount',{id:id,type:'info'},function(result){  //获取评论总数
+    util.get('http://wk.test.com:8080/comment/getCount',{id:id,type:'info'},function(result){  //获取评论总数
       if(result.code == 200){
         that.setData({comnum:result.data});
       }

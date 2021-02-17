@@ -55,7 +55,7 @@ Page({
 
     getCarList: function (date = '', start = '', over = '') {
         var that = this;
-        util.req('http://wk.test.com:8080/info/lists',
+        util.get('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: carPage, type: that.data.activeIndex},
             function (result) {
                 if (result.data.length == 0) {
@@ -106,7 +106,7 @@ Page({
     },
     getPeopleList: function (date = '', start = '', over = '') {
         var that = this;
-        util.req('http://wk.test.com:8080/info/lists',
+        util.get('http://wk.test.com:8080/info/lists',
             {start: start, over: over, date: date, page: peoplePage, type: that.data.activeIndex},
             function (result) {
                 if (result.data.length == 0) {
@@ -165,12 +165,14 @@ Page({
     onPullDownRefresh: function () {
         if (this.data.activeIndex == 0) {
             if (!this.data.carNomore) {
-                carPage++;
+                carPage=1;
+                that.setData({carNomore: false});
                 this.getList(this.data.date, this.data.start, this.data.over);
             }
         } else {
             if (!this.data.popleNomore) {
-                peoplePage++;
+                peoplePage=1;
+                that.setData({peopleNomore: false});
                 this.getList(this.data.date, this.data.start, this.data.over);
             }
         }

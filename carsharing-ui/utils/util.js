@@ -26,7 +26,7 @@ var wxAppinfo = {
 //修改成你的appid及appsecret
 var AppConf = {'appid': 'wx7315731f7da2477e', 'appsecret': 'ef517b41546112236b858748d935ad75'};
 
-function req(url, data, cb) {
+function get(url, data, cb) {
     data.appid = AppConf.appid;
     data.appsecret = AppConf.appsecret;
     wx.request({
@@ -45,7 +45,7 @@ function req(url, data, cb) {
 }
 
 
-function postReq(url, data, cb) {
+function post(url, data, cb) {
     data.appid = AppConf.appid;
     data.appsecret = AppConf.appsecret;
     wx.request({
@@ -70,6 +70,24 @@ function getReq(url, data, cb) {
         url: rootDocment + url,
         data: data,
         method: 'get',
+        header: {'Content-Type': 'application/x-www-form-urlencoded'},
+        success: function (res) {
+            return typeof cb == "function" && cb(res.data)
+        },
+        fail: function () {
+            return typeof cb == "function" && cb(false)
+        }
+    })
+}
+
+function del(url, data, cb) {
+    data.appid = AppConf.appid;
+    data.appsecret = AppConf.appsecret;
+    wx.request({
+        //url: rootDocment + url,
+        url: url,
+        data: data,
+        method: 'delete',
         header: {'Content-Type': 'application/x-www-form-urlencoded'},
         success: function (res) {
             return typeof cb == "function" && cb(res.data)
@@ -175,8 +193,9 @@ function escape2Html(str) {
 
 module.exports = {
     formatTime: formatTime,
-    req: req,
-    postReq: postReq,
+    get: get,
+    post: post,
+    del: del,
     trim: trim,
     isError: isError,
     clearError: clearError,

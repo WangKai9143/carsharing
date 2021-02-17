@@ -94,7 +94,7 @@ Page({
         data.sk = app.globalData.sk;
         data.departure = that.data.departure;
         data.destination = that.data.destination;
-        util.postReq('http://wk.test.com:8080/info/add', data, function (result) {
+        util.post('http://wk.test.com:8080/info/add', data, function (result) {
             if (result.code == 200) {
                 wx.redirectTo({
                     url: '/pages/info/index?id=' + result.data

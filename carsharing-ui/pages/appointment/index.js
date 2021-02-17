@@ -9,7 +9,7 @@ Page({
   onLoad: function (options) {
     var that = this;
     id = options.id;
-    util.req('appointment/detail', { id: options.id, sk: app.globalData.sk }, function (data) {
+    util.get('appointment/detail', { id: options.id, sk: app.globalData.sk }, function (data) {
       console.log(data);
       data.data.time = util.formatTime(new Date(data.data.time * 1000));
       that.setData({ data: data.data });
@@ -22,7 +22,7 @@ Page({
       mask: true
     })
     setTimeout(function(){
-      util.req('appointment/submit', { id: id, sk: app.globalData.sk, type: type, form_id: e.detail.formId}, function (data) {
+      util.get('appointment/submit', { id: id, sk: app.globalData.sk, type: type, form_id: e.detail.formId}, function (data) {
         wx.hideLoading();
         if(data.status == 1){
           if(type == 1){

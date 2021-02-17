@@ -63,7 +63,7 @@ Page({
       util.isError('请输入内容或者至少选择一张图片', that);
       return false;
     }
-    util.req('dynamic/add',{
+    util.get('dynamic/add',{
       'content':content,
       'img':JSON.stringify(that.data.files),
       'sk':app.globalData.sk

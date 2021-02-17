@@ -41,6 +41,14 @@
         insert into xcx_info(date,time,departure,destination,gender,name,phone,remark,surplus,type,vehicle,uid,status,see,price,addtime) values(#{date},#{time},#{departure},#{destination},#{gender},#{name},#{phone},#{remark},#{surplus},#{type},#{vehicle},#{uid},#{status},#{see},#{price},#{addtime})
     </insert>
 
+    <update id="updateInfo" parameterType="com.wangkai.information.bean.InfoBean">
+        update  xcx_info set date=#{date},time=#{time},departure=#{departure},destination=#{departure},gender=#{gender},name=#{name},phone=#{phone},remark=#{remark},price=#{price} where id=#{id}
+    </update>
+
+    <delete id="deleteInfo" parameterType="map">
+        delete  from xcx_info where id = ${id}
+     </delete>
+
     <select id="listAllInfo" resultMap="InfoAndUserVo"
             parameterType="java.util.Map">
         select info.*, user.avatarUrl from (select * from xcx_info where status = 1

@@ -63,7 +63,7 @@ Page({
       util.isError('请输入内容或者至少选择一张图片', that);
       return false;
     }
-    util.postReq('http://wk.test.com:8080/comment/add',{
+    util.post('http://wk.test.com:8080/comment/add',{
       'iid':that.data.data.id,
       'reply':(that.data.data.reply == '楼主')?'':that.data.data.reply,
       'type':'info',

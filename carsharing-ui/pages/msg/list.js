@@ -8,7 +8,7 @@ Page({
   data:{},
   getList:function(id){
     var that = this;
-    util.req('msg/get',{type:id,sk:app.globalData.sk,page:page},function(data){
+    util.get('msg/get',{type:id,sk:app.globalData.sk,page:page},function(data){
       if(data.data == null){
         that.setData({ 'isnull': true,'nomore':true});
         return false;

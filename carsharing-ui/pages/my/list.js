@@ -15,11 +15,11 @@ Page({
             content: '确定删除?',
             success: function (res) {
                 if (res.confirm) {
-                    util.req('http://wk.test.com:8080/info/del', {
+                    util.del('http://wk.test.com:8080/info/del', {
                         sk: app.globalData.sk,
                         id: list[currentTarget].id
                     }, function (data) {
-                        if (data.status == 1) {
+                        if (data.code == 200) {
                             list.splice(currentTarget, 1);
                             that.setData({list: list});
                             wx.showToast({
@@ -39,7 +39,6 @@ Page({
     },
     edit: function (e) {
         var currentTarget = e.currentTarget.id;
-        console.log('/pages/info/add?id=' + list[currentTarget].id);
         wx.navigateTo({
             url: '/pages/info/edit?id=' + list[currentTarget].id,
             complete: function (res) {
@@ -55,7 +54,7 @@ Page({
     },
     getList() {
         var that = this;
-        util.req('http://wk.test.com:8080/info/mylist', {sk: app.globalData.sk, page: page}, function (result) {
+        util.get('http://wk.test.com:8080/info/mylist', {sk: app.globalData.sk, page: page}, function (result) {
             if (result.data.length == 0) {
                 if (page == 1) {
                     console.log(page);

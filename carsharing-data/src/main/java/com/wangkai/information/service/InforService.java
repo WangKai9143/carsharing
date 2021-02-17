@@ -1,15 +1,13 @@
 package com.wangkai.information.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.wangkai.common.GlobalCache;
-import com.wangkai.information.bean.InfoAndUserVo;
 import com.wangkai.information.bean.InfoBean;
 import com.wangkai.information.dao.InfoDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,5 +54,17 @@ public class InforService {
         PageHelper.startPage(currPage, pageSize);
         List<InfoBean> infoBeanList = inforDao.myInfoList(paramsMap);
         return infoBeanList;
+    }
+
+    public void deleteInfo(int id, String sk) {
+        Map<String,Object> userMap = new HashMap<>();
+        userMap.put("sk",sk);
+        userMap.put("id",id);
+        inforDao.deleteInfo(userMap);
+    }
+
+    public void updateInfo(InfoBean infoBean) {
+        infoBean.setTime(String.valueOf(System.currentTimeMillis()/1000));
+        inforDao.updateInfo(infoBean);
     }
 }

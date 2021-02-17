@@ -11,7 +11,7 @@ App({
             key: 'sk',
             success: function(res) {
                 var sk = res.data;
-                util.req('user/vaild_sk', { "sk": sk }, function (data) {
+                util.get('user/vaild_sk', { "sk": sk }, function (data) {
                   if (data.status == 1) {
                     that.globalData.sk = sk;
                   } else {

@@ -37,7 +37,7 @@ Page({
   },
   getPassenger: function () {
     var that = this;
-    util.req('http://wk.test.com:8080/appointment/getPassenger',{sk:app.globalData.sk},function(result){
+    util.get('http://wk.test.com:8080/appointment/getPassenger',{sk:app.globalData.sk},function(result){
       if(result.code == 200){
         var list = result.data;
         var arr = new Array();
@@ -73,7 +73,7 @@ Page({
   },
   getMy: function () {
     var that = this;
-    util.req('http://wk.test.com:8080/appointment/my', { sk: app.globalData.sk }, function (result) {
+    util.get('http://wk.test.com:8080/appointment/my', { sk: app.globalData.sk }, function (result) {
       if (result.code == 200) {
         var list = result.data;
         that.setData({my:list});

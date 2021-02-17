@@ -20,4 +20,8 @@ public interface InfoDao {
      List<InfoBean> listAllInfo(Map<String,Object> paramsMap);
 
      List<InfoBean> myInfoList(Map<String, Object> paramsMap);
+
+    void deleteInfo(Map<String,Object> userMap);
+
+    void updateInfo(InfoBean infoBean);
 }

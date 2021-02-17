@@ -45,6 +45,15 @@ public class InfoController {
         return ResultDataUtils.build(200, "操作成功",infoBean.getId());
     }
 
+    @PostMapping("/update")
+    public String handleUpdateInfo(InfoBean infoBean){
+        inforService.updateInfo(infoBean);
+        return ResultDataUtils.build(200, "操作成功",infoBean.getId());
+    }
 
-
+    @DeleteMapping("/del")
+    public String handleDelInfo(@RequestParam int id,@RequestParam String sk){
+        inforService.deleteInfo(id,sk);
+        return ResultDataUtils.build(200, "操作成功");
+    }
 }

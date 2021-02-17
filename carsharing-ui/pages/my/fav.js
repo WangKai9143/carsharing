@@ -15,7 +15,7 @@ Page({
       content: '取消收藏?',
       success: function(res) {
         if (res.confirm) {
-          util.req('fav/delFav',{sk:app.globalData.sk,iid:list[currentTarget].id},function(data){
+          util.get('fav/delFav',{sk:app.globalData.sk,iid:list[currentTarget].id},function(data){
             if(data.status == 1){
               list.splice(currentTarget,1);
               that.setData({list:list});
@@ -42,7 +42,7 @@ Page({
   },
   getList(){
     var that = this;
-    util.req('fav/myFav',{sk:app.globalData.sk,page:page},function(data){
+    util.get('fav/myFav',{sk:app.globalData.sk,page:page},function(data){
       if(data.data == null){
           if(page == 1){  
             console.log(page)        ;
