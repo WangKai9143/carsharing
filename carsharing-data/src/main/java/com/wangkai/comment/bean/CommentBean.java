@@ -1,6 +1,6 @@
 package com.wangkai.comment.bean;
 
-import com.wangkai.common.BaseInfo;
+import com.wangkai.common.BaseBean;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,18 +15,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CommentBean extends BaseInfo {
-  /*  CREATE TABLE IF NOT EXISTS `xcx_comment` (
-        `id` int(11) NOT NULL,
-        `uid` int(11) DEFAULT NULL,
-        `iid` int(11) DEFAULT NULL,
-        `time` int(11) DEFAULT NULL,
-        `type` varchar(50) NOT NULL DEFAULT 'info',
-        `content` text NOT NULL,
-        `img` text NOT NULL,
-        `zan` int(11) NOT NULL DEFAULT '0',
-        `reply` text
-  ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4;*/
+public class CommentBean extends BaseBean {
     private int id;
     private int uid;
     private int iid;

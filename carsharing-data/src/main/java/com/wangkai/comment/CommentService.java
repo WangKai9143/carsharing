@@ -3,7 +3,6 @@ package com.wangkai.comment;
 import com.github.pagehelper.PageHelper;
 import com.wangkai.comment.bean.CommentBean;
 import com.wangkai.comment.dao.CommentDao;
-import com.wangkai.utils.InforMaps;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

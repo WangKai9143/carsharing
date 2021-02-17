@@ -8,7 +8,6 @@
         <result property="time" column="time"/>
         <result property="departure" column="departure"/>
         <result property="destination" column="destination"/>
-        <result property="isAgree" column="isAgree"/>
         <result property="name" column="name"/>
         <result property="phone" column="phone"/>
         <result property="remark" column="remark"/>
@@ -37,6 +36,10 @@
             <result property="name" column="name"/>
         </association>
     </resultMap>
+
+    <insert id="addInfo" useGeneratedKeys="true" keyProperty="id" parameterType="com.wangkai.information.bean.InfoBean">
+        insert into xcx_info(date,time,departure,destination,gender,name,phone,remark,surplus,type,vehicle,uid,status,see,price,addtime) values(#{date},#{time},#{departure},#{destination},#{gender},#{name},#{phone},#{remark},#{surplus},#{type},#{vehicle},#{uid},#{status},#{see},#{price},#{addtime})
+    </insert>
 
     <select id="listAllInfo" resultMap="InfoAndUserVo"
             parameterType="java.util.Map">

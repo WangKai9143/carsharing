@@ -6,6 +6,8 @@ package com.wangkai.user.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.wangkai.common.GlobalCache;
+import com.wangkai.utils.ObjectUtils;
 import com.wangkai.user.bean.UserBean;
 import com.wangkai.user.service.UserService;
 import com.wangkai.utils.HttpClientUtil;
@@ -44,7 +46,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/login")
-    public String login(String encryptedData, String iv, String code) {
+    public String login(String encryptedData, String iv, String code) throws IllegalAccessException {
         if (StringUtils.isEmpty(code)) {
             return ResultDataUtils.build(202, "未获取到用户凭证code");
         }
@@ -56,10 +58,11 @@ public class UserController {
 
         UserBean userBean = userService.getUserInfoByOpenid(openId);
         String result = null;
-        if (userBean!=null){
+        if (userBean != null) {
             Map<String, Object> userResult = new HashMap<>();
             userResult.put("userInfo", userBean);
             userResult.put("sk", session_key);
+            GlobalCache.put(session_key, ObjectUtils.objectToMap(userBean));
             result = ResultDataUtils.build(200, "登陆成功", userResult);
         } else if (!StringUtils.isEmpty(openId) && !StringUtils.isEmpty(session_key)) {
             // 解密获取用户信息
@@ -80,9 +83,10 @@ public class UserController {
                 Map<String, Object> userResult = new HashMap<>();
                 userResult.put("userInfo", userInfo);
                 userResult.put("sk", session_key);
+                GlobalCache.put(session_key, userInfo);
                 result = ResultDataUtils.build(200, "登陆成功", userResult);
             } else {
-                result =  ResultDataUtils.build(202, "请求微信端服务器失败或者解析用户信息失败");
+                result = ResultDataUtils.build(202, "请求微信端服务器失败或者解析用户信息失败");
             }
         } else {
             result = ResultDataUtils.build(202, "未获取到用户openid 或 session");

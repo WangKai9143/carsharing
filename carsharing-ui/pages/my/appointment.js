@@ -37,20 +37,30 @@ Page({
   },
   getPassenger: function () {
     var that = this;
-    util.req('appointment/getPassenger',{sk:app.globalData.sk},function(data){
-      if(data.status == 1){
-        var list = data.data;
+    util.req('http://wk.test.com:8080/appointment/getPassenger',{sk:app.globalData.sk},function(result){
+      if(result.code == 200){
+        var list = result.data;
         var arr = new Array();
         list.forEach(function (item) {
           var status = item.status;
           var phone = item.phone;
-          if (item.status == 0 && (new Date().getTime()) > (item.time * 1000)) {
-              var status = 3;
-              var phone = false;
+          // if (item.status == 0 && (new Date().getTime()) > (item.time * 1000)) {
+          //     var status = 3;
+          //     var phone = false;
+          // }
+          try {
+            var tmp_departure = ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+          } catch (e) {
+            var tmp_departure = (item.departure).split(/[县区]/)[0];
+          }
+          try {
+            var tmp_destination = ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1');
+          } catch (e) {
+            var tmp_destination = (item.destination).split(/[县区]/)[0];
           }
           arr.push({
-            departure: ((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1'),
-            destination: ((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/, '$1'),
+            departure: tmp_departure,
+            destination: tmp_destination,
             time: util.formatTime(new Date(item.time * 1000)),
             status: status,
             id:item.id,
@@ -63,9 +73,9 @@ Page({
   },
   getMy: function () {
     var that = this;
-    util.req('appointment/my', { sk: app.globalData.sk }, function (data) {
-      if (data.status == 1) {
-        var list = data.data;
+    util.req('http://wk.test.com:8080/appointment/my', { sk: app.globalData.sk }, function (result) {
+      if (result.code == 200) {
+        var list = result.data;
         that.setData({my:list});
       }
     })

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseInfo {
+public class BaseBean {
     private String sk;
     private String appid;
     private String appsecret;

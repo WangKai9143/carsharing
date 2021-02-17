@@ -2,6 +2,7 @@ package com.wangkai.information.service;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.wangkai.common.GlobalCache;
 import com.wangkai.information.bean.InfoAndUserVo;
 import com.wangkai.information.bean.InfoBean;
 import com.wangkai.information.dao.InfoDao;
@@ -27,8 +28,12 @@ public class InforService {
         return inforDao.getDetails(id);
     }
 
-    public boolean add(InfoBean infoBean) {
-        return inforDao.add(infoBean);
+    public void addInfo(InfoBean infoBean) {
+        Map<String,Object> userMap = (Map<String, Object>) GlobalCache.get(infoBean.getSk());
+        infoBean.setUid(Integer.valueOf(userMap.get("id").toString()));
+        infoBean.setTime(String.valueOf(System.currentTimeMillis()/1000));
+        infoBean.setStatus(1);
+        inforDao.addInfo(infoBean);
     }
 
     public List<InfoBean> listAllInfo(Map<String, Object> paramsMap) {
@@ -38,7 +43,6 @@ public class InforService {
         }
         PageHelper.startPage(currPage, pageSize);
         List<InfoBean> infoBeanList = inforDao.listAllInfo(paramsMap);
-//        Page<InfoBean> count = (Page<InfoBean>)infoBeanList;
         return infoBeanList;
     }
 }

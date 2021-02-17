@@ -1,5 +1,6 @@
 package com.wangkai.appointment.bean;
 
+import com.wangkai.common.BaseBean;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class AppointmentBean {
+public class AppointmentBean extends BaseBean {
     private int id;
     private int uid;
     private int iid;

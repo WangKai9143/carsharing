@@ -13,9 +13,9 @@ import java.util.Map;
  */
 //@Mapper和在application中@MapperScan选择一种方式使用
 public interface InfoDao {
-    public InfoBean getDetails(int id);
+     InfoBean getDetails(int id);
 
-    public boolean add(InfoBean infoBean);
+     void addInfo(InfoBean infoBean);
 
-    public List<InfoBean> listAllInfo(Map<String,Object> paramsMap);
+     List<InfoBean> listAllInfo(Map<String,Object> paramsMap);
 }

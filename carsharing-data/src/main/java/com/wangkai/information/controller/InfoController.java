@@ -33,13 +33,11 @@ public class InfoController {
     }
 
     @PostMapping("/add")
-    public String handleAdd(@RequestBody InfoBean infoBean){
-        final double d = Math.random();
-        final int id = (int)(d*100);
-        infoBean.setId(id);
-        inforService.add(infoBean);
-        return ResultDataUtils.build(200, "操作成功", infoBean.getId());
+    public String handleAddInfo(InfoBean infoBean){
+        inforService.addInfo(infoBean);
+        return ResultDataUtils.build(200, "操作成功",infoBean.getId());
     }
+
 
 
 }

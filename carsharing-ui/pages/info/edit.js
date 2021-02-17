@@ -12,7 +12,7 @@ Page({
     start:today,
     end:maxday,
     time:'请选择时间',
-    types:[{name: '1', value: '车找人',checked: true},{name: '2', value: '人找车'}],
+    types:[{name: '0', value: '车找人',checked: true},{name: '1', value: '人找车'}],
     Surpluss:['请选择',1,2,3,4,5,6],
     surplus:0,
     isAgree: false,
