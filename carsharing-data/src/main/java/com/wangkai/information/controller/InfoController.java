@@ -5,6 +5,7 @@ package com.wangkai.information.controller;
  */
 
 
+import com.wangkai.common.GlobalCache;
 import com.wangkai.information.bean.InfoBean;
 import com.wangkai.information.service.InforService;
 import com.wangkai.utils.ResultDataUtils;
@@ -23,6 +24,12 @@ public class InfoController {
     @GetMapping("/lists")
     public String lists(@RequestParam Map<String,Object> paramsMap){
         Collection<InfoBean> infoBeans =  inforService.listAllInfo(paramsMap);
+        return ResultDataUtils.build(200, "操作成功", infoBeans);
+    }
+
+    @GetMapping("/mylist")
+    public String mylist(@RequestParam Map<String,Object> paramsMap){
+        Collection<InfoBean> infoBeans =  inforService.myInfoList(paramsMap);
         return ResultDataUtils.build(200, "操作成功", infoBeans);
     }
 

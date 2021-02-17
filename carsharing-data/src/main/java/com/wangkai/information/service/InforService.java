@@ -45,4 +45,16 @@ public class InforService {
         List<InfoBean> infoBeanList = inforDao.listAllInfo(paramsMap);
         return infoBeanList;
     }
+
+    public List<InfoBean> myInfoList(Map<String, Object> paramsMap) {
+        Map<String,Object> userMap = (Map<String, Object>) GlobalCache.get(paramsMap.get("sk").toString());
+        paramsMap.put("uid",userMap.get("id").toString());
+        int currPage = 1;
+        if (paramsMap != null && !paramsMap.isEmpty()) {
+            currPage = Integer.parseInt(paramsMap.get("page").toString());
+        }
+        PageHelper.startPage(currPage, pageSize);
+        List<InfoBean> infoBeanList = inforDao.myInfoList(paramsMap);
+        return infoBeanList;
+    }
 }

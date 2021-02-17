@@ -62,8 +62,13 @@
         left join xcx_user as user on user.id = info.uid order by info.time asc
     </select>
 
+
     <select id="getDetails" resultMap="InfoAndUserVo"
             parameterType="int">
         select info.*, user.nickName,user.avatarUrl from (select * from xcx_info where id = #{id}) info left join xcx_user as user on user.id = info.uid
     </select>
+
+    <select id="myInfoList" resultType="com.wangkai.information.bean.InfoBean" parameterType="java.util.Map">
+       select * from xcx_info where uid = #{uid} order by addtime asc
+ </select>
 </mapper>

@@ -18,4 +18,6 @@ public interface InfoDao {
      void addInfo(InfoBean infoBean);
 
      List<InfoBean> listAllInfo(Map<String,Object> paramsMap);
+
+     List<InfoBean> myInfoList(Map<String, Object> paramsMap);
 }

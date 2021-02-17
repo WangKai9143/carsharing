@@ -164,11 +164,16 @@ Page({
     },
     onPullDownRefresh: function () {
         if (this.data.activeIndex == 0) {
-            carPage = 1;
+            if (!this.data.carNomore) {
+                carPage++;
+                this.getList(this.data.date, this.data.start, this.data.over);
+            }
         } else {
-            peoplePage = 1;
+            if (!this.data.popleNomore) {
+                peoplePage++;
+                this.getList(this.data.date, this.data.start, this.data.over);
+            }
         }
-        this.getList(this.data.date, this.data.start, this.data.over);
         wx.stopPullDownRefresh();
     },
     getstart: function (e) {
