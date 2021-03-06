@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wangkai.favorite.dao.FavoriteDao">
+
+<!--    <resultMap type="map" id="favoriteBeanVo">-->
+<!--        <id property="id" column="id"/>-->
+<!--        <result property="uid" column="uid"/>-->
+<!--        <result property="iid" column="iid"/>-->
+<!--        <result property="time" column="time"/>-->
+
+<!--&lt;!&ndash;        &lt;!&ndash; 一对一关系 &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <association property="infoBean" javaType="com.wangkai.information.bean.InfoBean">&ndash;&gt;-->
+<!--&lt;!&ndash;            <id property="id" column="id"/>&ndash;&gt;-->
+<!--            <result property="date" column="date"/>-->
+<!--            <result property="time" column="time"/>-->
+<!--            <result property="departure" column="departure"/>-->
+<!--            <result property="destination" column="destination"/>-->
+<!--            <result property="name" column="name"/>-->
+<!--            <result property="phone" column="phone"/>-->
+<!--            <result property="remark" column="remark"/>-->
+<!--            <result property="surplus" column="surplus"/>-->
+<!--            <result property="type" column="type"/>-->
+<!--            <result property="vehicle" column="vehicle"/>-->
+<!--            <result property="uid" column="uid"/>-->
+<!--            <result property="status" column="status"/>-->
+<!--            <result property="see" column="see"/>-->
+<!--            <result property="price" column="price"/>-->
+<!--            <result property="addtime" column="addtime"/>-->
+<!--&lt;!&ndash;        </association>&ndash;&gt;-->
+<!--    </resultMap>-->
+
+    <insert id="addFav" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.wangkai.favorite.bean.FavoriteBean">
+        insert into xcx_fav(uid,iid,time) values (#{uid},#{iid},#{time})
+    </insert>
+
+    <delete id="delFav" parameterType="com.wangkai.favorite.bean.FavoriteBean">
+        delete from xcx_fav where uid=#{uid} and iid=#{iid}
+    </delete>
+
+    <select id="isfav" parameterType="com.wangkai.favorite.bean.FavoriteBean" resultType="int">
+        select count(1) from xcx_fav where uid=#{uid} and iid=#{iid}
+    </select>
+
+    <select id="myFav" parameterType="int" resultType="map">
+        select fav.id as fad,info.* from (select * from xcx_fav where uid=#{uid}) fav left join xcx_info info on fav.iid = info.id
+    </select>
+
+</mapper>

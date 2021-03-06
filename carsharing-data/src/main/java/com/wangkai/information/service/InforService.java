@@ -1,9 +1,9 @@
 package com.wangkai.information.service;
 
 import com.github.pagehelper.PageHelper;
-import com.wangkai.common.GlobalCache;
 import com.wangkai.information.bean.InfoBean;
 import com.wangkai.information.dao.InfoDao;
+import com.wangkai.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,21 +18,25 @@ import java.util.Map;
 @Service
 public class InforService {
     @Autowired
-    private InfoDao inforDao;
+    private InfoDao infoDao;
+
+    @Autowired
+    private UserService userService;
 
     private static int pageSize = 5;
 
     public InfoBean getDetails(int id) {
-        return inforDao.getDetails(id);
+        return infoDao.getDetails(id);
     }
 
     public void addInfo(InfoBean infoBean) {
-        Map<String,Object> userMap = (Map<String, Object>) GlobalCache.get(infoBean.getSk());
-        infoBean.setUid(Integer.valueOf(userMap.get("id").toString()));
+        int uId = userService.getUId(infoBean.getSk());
+        infoBean.setUid(uId);
         infoBean.setTime(String.valueOf(System.currentTimeMillis()/1000));
         infoBean.setStatus(1);
-        inforDao.addInfo(infoBean);
+        infoDao.addInfo(infoBean);
     }
+
 
     public List<InfoBean> listAllInfo(Map<String, Object> paramsMap) {
         int currPage = 1;
@@ -40,19 +44,19 @@ public class InforService {
             currPage = Integer.parseInt(paramsMap.get("page").toString());
         }
         PageHelper.startPage(currPage, pageSize);
-        List<InfoBean> infoBeanList = inforDao.listAllInfo(paramsMap);
+        List<InfoBean> infoBeanList = infoDao.listAllInfo(paramsMap);
         return infoBeanList;
     }
 
     public List<InfoBean> myInfoList(Map<String, Object> paramsMap) {
-        Map<String,Object> userMap = (Map<String, Object>) GlobalCache.get(paramsMap.get("sk").toString());
-        paramsMap.put("uid",userMap.get("id").toString());
+        int uId = userService.getUId(paramsMap.get("sk").toString());
+        paramsMap.put("uid",uId);
         int currPage = 1;
         if (paramsMap != null && !paramsMap.isEmpty()) {
             currPage = Integer.parseInt(paramsMap.get("page").toString());
         }
         PageHelper.startPage(currPage, pageSize);
-        List<InfoBean> infoBeanList = inforDao.myInfoList(paramsMap);
+        List<InfoBean> infoBeanList = infoDao.myInfoList(paramsMap);
         return infoBeanList;
     }
 
@@ -60,11 +64,11 @@ public class InforService {
         Map<String,Object> userMap = new HashMap<>();
         userMap.put("sk",sk);
         userMap.put("id",id);
-        inforDao.deleteInfo(userMap);
+        infoDao.deleteInfo(userMap);
     }
 
     public void updateInfo(InfoBean infoBean) {
         infoBean.setTime(String.valueOf(System.currentTimeMillis()/1000));
-        inforDao.updateInfo(infoBean);
+        infoDao.updateInfo(infoBean);
     }
 }

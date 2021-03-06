@@ -15,7 +15,7 @@ Page({
       content: '取消收藏?',
       success: function(res) {
         if (res.confirm) {
-          util.get('fav/delFav',{sk:app.globalData.sk,iid:list[currentTarget].id},function(data){
+          util.get('http://wk.test.com:8080/fav/delFav',{sk:app.globalData.sk,iid:list[currentTarget].id},function(data){
             if(data.status == 1){
               list.splice(currentTarget,1);
               that.setData({list:list});
@@ -42,10 +42,9 @@ Page({
   },
   getList(){
     var that = this;
-    util.get('fav/myFav',{sk:app.globalData.sk,page:page},function(data){
-      if(data.data == null){
+    util.get('http://wk.test.com:8080/fav/myFav',{sk:app.globalData.sk,page:page},function(result){
+      if(result.data == null){
           if(page == 1){  
-            console.log(page)        ;
             that.setData({'isnull':true});
           }
           that.setData({nomore:true});
@@ -57,7 +56,7 @@ Page({
         }
 
         var surp = new Array('','空位','人');
-        data.data.forEach(function(item){
+        result.data.forEach(function(item){
           var obj = {
             start:((item.departure).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/,'$1'),
             over:((item.destination).split('市')[1]).replace(/([\u4e00-\u9fa5]+[县区]).+/,'$1'),
@@ -75,6 +74,11 @@ Page({
           list.push(obj);
         })
       that.setData({list:list});
+      // 防止首页数据小于5，前端显示加载中
+      if (result.data.length < 5) {
+        that.setData({nomore: true});
+        return false;
+      }
     })
   },  
   onPullDownRefresh: function(){

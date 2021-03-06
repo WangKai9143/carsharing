@@ -24,7 +24,7 @@ Page({
   zan:function(event){
     var that = this;
     var Commentdata = this.data.comment;
-    util.get('comment/zan',{
+    util.get('http://wk.test.com:8080/comment/zan',{
       'cid':Commentdata[event.currentTarget.id].id,
       'sk':app.globalData.sk
       },function(data){
@@ -46,7 +46,7 @@ Page({
   },
   shoucang:function(){
     var that = this;
-    util.get('fav/addfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
+    util.post('http://wk.test.com:8080/fav/addfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
       if(data.status == 1){
         that.setData({'shoucang':true});
         wx.showToast({
@@ -59,7 +59,7 @@ Page({
   },
   qxshoucang:function(){
     var that = this;
-    util.get('fav/delfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
+    util.del('http://wk.test.com:8080/fav/delfav',{iid:that.data.data.id,sk:app.globalData.sk},function(data){
       if(data.status == 1){
         that.setData({'shoucang':false});
         wx.showToast({
@@ -129,11 +129,11 @@ Page({
       'userInfo.phone':app.globalData.userInfo.phone
     })
 
-    // util.get('fav/isfav',{iid:options.id,sk:app.globalData.sk},function(data){
-    //   if(data.status == 1){
-    //     that.setData({'shoucang':true});
-    //   }
-    // })
+    util.get('http://wk.test.com:8080/fav/isfav',{iid:options.id,sk:app.globalData.sk},function(result){
+      if(result.data == 1){
+        that.setData({'shoucang':true});
+      }
+    })
       util.get('http://wk.test.com:8080/info/details?id=' + options.id,{},function(result){
       that.setData({data:result.data});
       // if(data.data.uid == app.globalData.userInfo.id){

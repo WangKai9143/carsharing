@@ -1,5 +1,6 @@
 package com.wangkai.user.service;
 
+import com.wangkai.common.GlobalCache;
 import com.wangkai.user.bean.UserBean;
 import com.wangkai.user.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,12 @@ import java.util.Map;
 public class UserService {
     @Autowired
     private UserDao userDao;
+
+    public int getUId(String sk) {
+        Map<String,Object> userMap = (Map<String, Object>) GlobalCache.get(sk);
+        int uId = Integer.valueOf(userMap.get("id").toString());
+        return uId;
+    }
 
     public UserBean getUserInfo(String id) {
         return userDao.findUserById(id);

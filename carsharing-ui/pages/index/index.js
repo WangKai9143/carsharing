@@ -165,13 +165,13 @@ Page({
     onPullDownRefresh: function () {
         if (this.data.activeIndex == 0) {
             if (!this.data.carNomore) {
-                carPage=1;
+                carPage = 1;
                 that.setData({carNomore: false});
                 this.getList(this.data.date, this.data.start, this.data.over);
             }
         } else {
             if (!this.data.popleNomore) {
-                peoplePage=1;
+                peoplePage = 1;
                 that.setData({peopleNomore: false});
                 this.getList(this.data.date, this.data.start, this.data.over);
             }
@@ -223,10 +223,10 @@ Page({
                     method: 'GET',
                     header: {'Content-Type': 'application/json'},
                     success: function (res) {
-                        /* that.setData({
-                           start:res.data.result.addressComponent.city
-                         })
-                         that.getList(that.data.date,res.data.result.addressComponent.city);*/
+                        that.setData({
+                            start: res.data.result.addressComponent.city
+                        })
+                        that.getList(that.data.date, res.data.result.addressComponent.city);
                     }
                 })
             }
